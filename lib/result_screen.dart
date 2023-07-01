@@ -10,7 +10,7 @@ class ResultScreen extends StatelessWidget {
   final List<String> choosenAnswers;
   final void Function() onResetQuiz;
 
-  List<Map<String, Object>> getSummaryData() {
+  List<Map<String, Object>> get summaryData {
     List<Map<String, Object>> summary = [];
     for (int i = 0; i < choosenAnswers.length; i++) {
       summary.add({
@@ -25,11 +25,10 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, Object>> summary = getSummaryData();
     final int noOfQuestions = questions.length;
-    final noOfCorrectAnswers = summary.where((data) {
-      return data['correct_answer'] == data['user_answer'];
-    }).length;
+    final noOfCorrectAnswers = summaryData
+        .where((data) => data['correct_answer'] == data['user_answer'])
+        .length;
 
     const String fileName = 'assets/images/result.svg';
     final Size size = MediaQuery.of(context).size;
@@ -54,7 +53,7 @@ class ResultScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            QuestionSummary(summaryData: summary),
+            QuestionSummary(summaryData: summaryData),
             const SizedBox(height: 20),
             ElevatedButton.icon(
               onPressed: onResetQuiz,
